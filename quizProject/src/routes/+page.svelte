@@ -2,10 +2,23 @@
   
     let email = $state("");
     let password = $state("");
-  
-    function signIn() {
-      alert(`Signing in with ${email}`);
-    }
+    let message = $state("");
+
+    async function signIn() {
+        message = "";
+
+        //send request to sign in api
+        const res = await fetch("api/auth/signIn", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+            });
+
+        const data = await res.json();
+
+        message = data.message || data.error;
+        }
+
   </script>
   
   <style>
@@ -117,10 +130,11 @@
     
     <div class="signin-box">
       <h3>Sign In</h3>
-      <input type="email" bind:value={email} placeholder="Email">
+      <input type="email" bind:value={email} placeholder="Username">
       <input type="password" bind:value={password} placeholder="Password">
       <button onclick={signIn}>Sign In</button>
       <a href="/createAccount">create an account</a>
+      <div>{message}</div>
     </div>
   </div>
   

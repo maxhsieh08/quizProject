@@ -128,7 +128,7 @@
     <div class="signin-box">
       <h3>create account</h3>
       
-        <input type="email" bind:value={email} placeholder="Email" required />
+        <input type="email" bind:value={email} placeholder="Username" required />
         <input type="password" bind:value={password} placeholder="Password" required />
         <button onclick={register}>create</button>
     
