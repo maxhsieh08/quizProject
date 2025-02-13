@@ -2,9 +2,24 @@
   
     let email = $state("");
     let password = $state("");
+    let message = $state("");
+      // ✅ Function to send the registration request
+  async function register() {
+    message = ""; // Clear previous messages
+
+    // ✅ Send a request to the registration API
+    const res = await fetch("../api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    message = data.message || data.error; // Display success or error message
+  }
   
     function signIn() {
-      alert(`Signing in with ${email}`);
+      alert(`creating password with ${email}`);
     }
   </script>
   
@@ -104,11 +119,6 @@
       <img src="favicon.png" alt="Logo"> <!-- Replace with actual logo -->
       <h1>QuizMe</h1>
     </div>
-    <nav>
-      <a href="https://www.youtube.com/">Home</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </nav>
   </header>
   
   <!-- MAIN CONTENT -->
@@ -116,11 +126,13 @@
     <h1 class="site-title">QuizMe</h1>
     
     <div class="signin-box">
-      <h3>Sign In</h3>
-      <input type="email" bind:value={email} placeholder="Email">
-      <input type="password" bind:value={password} placeholder="Password">
-      <button onclick={signIn}>Sign In</button>
-      <a href="/createAccount">create an account</a>
+      <h3>create account</h3>
+      
+        <input type="email" bind:value={email} placeholder="Email" required />
+        <input type="password" bind:value={password} placeholder="Password" required />
+        <button onclick={register}>create</button>
+    
+      
+      <p>{message}</p>
     </div>
   </div>
-  

@@ -35,6 +35,7 @@ async function connectDB() {
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    return client;
   } catch(error) {
     console.error("Failed to connect to MongoDB:", error);
     throw error;
@@ -58,6 +59,6 @@ async function closeDB() {
     }
   }
 //getConnectionStats();
-//connectDB().catch(console.dir);
+connectDB().catch(console.dir);
 //closeDB();
 export { client, connectDB, closeDB };
