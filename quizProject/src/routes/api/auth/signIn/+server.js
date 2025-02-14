@@ -1,5 +1,5 @@
 import { connectDB } from '../../../../lib/server/db';
-import { hashPassword, verifyPassword } from '../../../../lib/server/auth';
+import { verifyPassword } from '../../../../lib/server/auth';
 
 export async function POST ({ request, cookies }) {
     try {

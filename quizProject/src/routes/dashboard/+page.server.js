@@ -1,12 +1,14 @@
 
+import { redirect } from "@sveltejs/kit";
+
 export async function load({ locals }) {
-    // Get user from locals (set in hooks)
     // @ts-ignore
     if (!locals.user) {
-        return { user: null };
+        console.log("User is not logged in, redirecting to login...");
+        throw redirect(302, "/");
+    } else {
+        // @ts-ignore
+        return { user: locals.user };
     }
-
-    // @ts-ignore
-    return { user: locals.user }; // User session data
+    
 }
-

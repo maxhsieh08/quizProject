@@ -6,9 +6,9 @@ export async function handle({ event, resolve }) {
 
   const publicRoutes = ["/", "/about"];
 
-  if (publicRoutes.includes(event.url.pathname)) {
-    return await resolve(event); // ✅ Allow public pages without checking session
-  }
+//   if (publicRoutes.includes(event.url.pathname)) {
+//     return await resolve(event); // ✅ Allow public pages without checking session
+//   }
 
     // ✅ Check for a session cookie for protected pages
     const sessionCookie = event.cookies.get("session");
