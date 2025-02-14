@@ -13,15 +13,17 @@ export async function POST ({ request, cookies }) {
         //search to see if user exists
         const existingUser = await userCollection.findOne({ email });
         if (!existingUser) {
-            return new Response(JSON.stringify({ error: "Email already registered" }), { status: 400 });
+            return new Response(JSON.stringify({ error: "email already registered" }), { status: 400 });
         }
+        const userId = existingUser._id;
         const hashedPassword = existingUser.password;
-        console.log(hashedPassword);
+        // console.log(hashedPassword);
+        console.log(existingUser._id);
         if(!(await verifyPassword(password, hashedPassword))) {
             return new Response(JSON.stringify({error: "Password is incorrect"}), { status: 401 });
         }
-
-        cookies.set("session", JSON.stringify({ email }), {
+        console.log(email);
+        cookies.set("session", JSON.stringify({ email, userId }), {
             httpOnly: true,   // Prevents JavaScript access (security)
             path: "/",        // Cookie is valid on all routes
             maxAge: 3600,     // Expire after 1 hour (3600 seconds)

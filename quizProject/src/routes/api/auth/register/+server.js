@@ -19,7 +19,6 @@ export async function POST({ request }) {
     if (!password || password.length < 5) {
       return new Response(JSON.stringify({ error: "Password must be at least 5 characters" }), { status: 400 });
     }
-    
     // ✅ Check if email is already registered
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {

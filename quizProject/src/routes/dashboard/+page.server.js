@@ -1,4 +1,3 @@
-import { json } from '@sveltejs/kit';
 
 export async function load({ locals }) {
     // Get user from locals (set in hooks)

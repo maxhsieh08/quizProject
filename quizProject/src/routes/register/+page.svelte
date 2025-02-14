@@ -18,9 +18,6 @@
     message = data.message || data.error; // Display success or error message
   }
   
-    function signIn() {
-      alert(`creating password with ${email}`);
-    }
   </script>
   
   <style>
@@ -200,7 +197,7 @@
         placeholder="Choose a password"
         autocomplete="new-password"
         required>
-      <button onclick={register}>Create Account</button>
+      <button>Create Account</button>
       <a href="/">Already have an account? Sign in</a>
       <p>{message}</p>
       </form>

@@ -203,7 +203,7 @@
         bind:value={password} 
         placeholder="Enter your password"
         autocomplete="current-password">
-      <button onclick={signIn}>Sign In</button>
+      <button>Sign In</button>
       <a href="/register">Create an account</a>
       <div>{message}</div>
       </form>
