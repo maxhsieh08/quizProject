@@ -1,7 +1,7 @@
 import { connectDB } from '../../../../lib/server/db';
 import { hashPassword, verifyPassword } from '../../../../lib/server/auth';
 
-export async function POST ({ request }) {
+export async function POST ({ request, cookies }) {
     try {
         const client = await connectDB();
 
@@ -21,6 +21,12 @@ export async function POST ({ request }) {
             return new Response(JSON.stringify({error: "Password is incorrect"}), { status: 401 });
         }
 
+        cookies.set("session", JSON.stringify({ email }), {
+            httpOnly: true,   // Prevents JavaScript access (security)
+            path: "/",        // Cookie is valid on all routes
+            maxAge: 3600,     // Expire after 1 hour (3600 seconds)
+            sameSite: "strict"
+          });
         return new Response(JSON.stringify({ message: "login successful!"}), { status: 200 });
 
     } catch(error) {

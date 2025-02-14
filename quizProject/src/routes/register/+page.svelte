@@ -3,26 +3,24 @@
     let email = $state("");
     let password = $state("");
     let message = $state("");
+      // ✅ Function to send the registration request
+  async function register() {
+    message = ""; // Clear previous messages
 
-    async function signIn() {
-        message = "";
+    // ✅ Send a request to the registration API
+    const res = await fetch("../api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
 
-        //send request to sign in api
-        const res = await fetch("api/auth/signIn", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-            });
-
-        const data = await res.json();
-
-        message = data.message || data.error;
-
-        if (res.ok) {
-          window.location.href = "/dashboard";
-        }
-        }
-
+    const data = await res.json();
+    message = data.message || data.error; // Display success or error message
+  }
+  
+    function signIn() {
+      alert(`creating password with ${email}`);
+    }
   </script>
   
   <style>
@@ -166,7 +164,7 @@
       color: #2b6cb0;
     }
   
-    div:last-child {
+    p {
       margin-top: 0.75rem;
       color: #e53e3e;
       font-size: 0.875rem;
@@ -176,37 +174,35 @@
   <!-- HEADER -->
   <header>
     <div class="logo">
-      <img src="favicon.png" alt="QuizMe Logo">
+      <a href="/">
+        <img src="favicon.png" alt="QuizMe Logo">
+      </a>
       <h1>QuizMe</h1>
     </div>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
-    </nav>
   </header>
   
   <!-- MAIN CONTENT -->
   <div class="main-content">
-    <h1 class="site-title">Welcome to QuizMe</h1>
+    <h1 class="site-title">Create Your Account</h1>
     
     <div class="signin-box">
-      <h3>Sign In</h3>
-      <form onsubmit={signIn}>
+      <h3>Sign Up</h3>
+      <form onsubmit={register}>
         <input 
         type="text" 
         bind:value={email} 
         placeholder="Enter your username"
-        autocomplete="email">
+        autocomplete="email"
+        required>
       <input 
         type="password" 
         bind:value={password} 
-        placeholder="Enter your password"
-        autocomplete="current-password">
-      <button onclick={signIn}>Sign In</button>
-      <a href="/register">Create an account</a>
-      <div>{message}</div>
+        placeholder="Choose a password"
+        autocomplete="new-password"
+        required>
+      <button onclick={register}>Create Account</button>
+      <a href="/">Already have an account? Sign in</a>
+      <p>{message}</p>
       </form>
     </div>
   </div>
-  

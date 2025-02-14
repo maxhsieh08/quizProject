@@ -10,10 +10,20 @@ export async function POST({ request }) {
 
     const { email, password } = await request.json();
 
+        // ✅ Validation: Check username length
+    if (!email || email.trim().length < 1) {
+      return new Response(JSON.stringify({ error: "Username must be at least 1 character" }), { status: 400 });
+    }
+
+    // ✅ Validation: Check password length
+    if (!password || password.length < 5) {
+      return new Response(JSON.stringify({ error: "Password must be at least 5 characters" }), { status: 400 });
+    }
+    
     // ✅ Check if email is already registered
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
-      return new Response(JSON.stringify({ error: "Email already registered" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Username already registered" }), { status: 400 });
     }
 
     // ✅ Hash the password
