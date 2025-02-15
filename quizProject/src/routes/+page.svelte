@@ -1,5 +1,5 @@
 <script>
-  
+  import Header from '$lib/components/header.svelte';
     let email = $state("");
     let password = $state("");
     let message = $state("");
@@ -25,6 +25,7 @@
 
   </script>
   
+  <!-- svelte-ignore slot_element_deprecated -->
   <style>
     :global(body) {
       margin: 0;
@@ -32,40 +33,6 @@
       min-height: 100vh;
       background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
     }
-  
-    /* HEADER STYLES */
-    header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: rgba(255, 255, 255, 0.95);
-      color: #2d3748;
-      position: fixed;
-      top: 0;
-      left: 0;
-      margin: 0;
-      box-sizing: border-box;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(10px);
-    }
-  
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-  
-    .logo img {
-      height: 32px;
-      transition: transform 0.2s ease;
-    }
-  
-    .logo img:hover {
-      transform: scale(1.05);
-    }
-  
     nav a {
       color: #4a5568;
       text-decoration: none;
@@ -173,19 +140,17 @@
     }
   </style>
   
-  <!-- HEADER -->
-  <header>
-    <div class="logo">
-      <img src="favicon.png" alt="QuizMe Logo">
-      <h1>QuizMe</h1>
-    </div>
+  <Header>
+    {#snippet name()} 
+    {/snippet}
+    {#snippet header()}
     <nav>
       <a href="/">Home</a>
       <a href="/about">About</a>
       <a href="/contact">Contact</a>
     </nav>
-  </header>
-  
+    {/snippet}
+  </Header>
   <!-- MAIN CONTENT -->
   <div class="main-content">
     <h1 class="site-title">Welcome to QuizMe</h1>

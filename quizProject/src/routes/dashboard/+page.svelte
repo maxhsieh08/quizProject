@@ -1,58 +1,18 @@
 <script>
+    import LogoutButton from '$lib/components/logoutButton.svelte';
+    import Header from '$lib/components/header.svelte';
     export let data;
 
-    async function logout() {
-        const res = await fetch("/api/auth/signOut", {
-            method: "POST",
-        });
-        
-        if (res.ok) {
-            window.location.href = "/";
-        }
-    }
 </script>
 
 <style>
-    :global(body) {
+      :global(body) {
       margin: 0;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       min-height: 100vh;
       background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
     }
-  
-    /* HEADER STYLES */
-    header {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 20px;
-      background: rgba(255, 255, 255, 0.95);
-      color: #2d3748;
-      position: fixed;
-      top: 0;
-      left: 0;
-      margin: 0;
-      box-sizing: border-box;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      backdrop-filter: blur(10px);
-    }
-  
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-  
-    .logo img {
-      height: 32px;
-      transition: transform 0.2s ease;
-    }
-  
-    .logo img:hover {
-      transform: scale(1.05);
-    }
-  
+
     nav a {
       color: #4a5568;
       text-decoration: none;
@@ -68,37 +28,8 @@
     /* MAIN CONTENT */
     .main-content {
       text-align: center;
-      margin-top: 15vh;
+      margin-top: 11vh;
       padding: 20px;
-    }
-  
-    .site-title {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #2d3748;
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.025em;
-    }
-  
-    .signin-box {
-      background: white;
-      padding: 2.5rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      max-width: 400px;
-      margin: 0 auto;
-      transition: transform 0.2s ease;
-    }
-  
-    .signin-box:hover {
-      transform: translateY(-2px);
-    }
-  
-    .signin-box h3 {
-      font-size: 1.5rem;
-      color: #2d3748;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
     }
   
     input {
@@ -172,43 +103,163 @@
         margin: 0;
     }
 
-    .logout-button {
+    .dashboard-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    .dashboard-card {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s ease;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .card-content {
+        text-align: left;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #2d3748;
+        margin: 0 0 0.5rem 0;
+    }
+
+    .card-description {
+        color: #718096;
+        font-size: 0.875rem;
+        margin: 0;
+    }
+
+    .card-stats {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .stat {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        color: #718096;
+        font-size: 0.875rem;
+    }
+
+    .card-icon {
+        background: #ebf8ff;
+        padding: 1rem;
+        border-radius: 12px;
+        color: #4299e1;
+        font-size: 1.5rem;
+    }
+
+    .create-quiz-button {
         background: #4299e1;
         color: white;
         border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 6px;
-        font-size: 0.875rem;
-        font-weight: 500;
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
     }
 
-    .logout-button:hover {
+    .create-quiz-button:hover {
         background: #3182ce;
         transform: translateY(-1px);
     }
 
-    .logout-button:active {
+    .create-quiz-button:active {
         transform: translateY(0);
     }
-  </style>
 
-  <header>
-    <div class="logo">
-      <a href="/dashboard">
-        <img src="favicon.png" alt="QuizMe Logo">
-      </a>
-      <h1>QuizMe</h1>
+    .create-icon {
+        font-size: 1.25rem;
+    }
+</style>
+
+  <Header>
+    {#snippet name()}
+    <h1 style="position: absolute; left: 50%; transform: translateX(-50%);">Dashboard</h1>
+    {/snippet}
+
+    {#snippet header()}
+    <div class="user-section">
+        <p class="welcome-text">{data.user.email}</p>
+         <LogoutButton> </LogoutButton>
     </div>
-    {#if data.user}
-        <div class="user-section">
-            <p class="welcome-text">Welcome, {data.user.email}</p>
-            <button class="logout-button" on:click={logout}>Logout</button>
+    {/snippet}
+  </Header>
+
+  <div class="main-content">
+    <div class="dashboard-grid">
+        <a href="/create">
+            <button class="create-quiz-button">
+                <span class="create-icon">➕</span>
+                Create Your Own Quiz
+            </button>
+        </a>
+        <div class="dashboard-card">
+            <div class="card-content">
+                <h3 class="card-title">JavaScript Fundamentals Quiz</h3>
+                <p class="card-description">Test your knowledge of JavaScript basics including variables, functions, and objects.</p>
+                <div class="card-stats">
+                    <span class="stat">20 Questions</span>
+                    <span class="stat">•</span>
+                    <span class="stat">15 min</span>
+                </div>
+            </div>
+            <div class="card-icon">📝</div>
         </div>
-    {:else}
-        <p>You are not logged in. <a href="/">Login</a></p>
-    {/if}
-  </header>
+
+        <div class="dashboard-card">
+            <div class="card-content">
+                <h3 class="card-title">Python Programming Challenge</h3>
+                <p class="card-description">Challenge yourself with Python programming concepts and problem-solving tasks.</p>
+                <div class="card-stats">
+                    <span class="stat">15 Questions</span>
+                    <span class="stat">•</span>
+                    <span class="stat">20 min</span>
+                </div>
+            </div>
+            <div class="card-icon">🐍</div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-content">
+                <h3 class="card-title">Web Development Basics</h3>
+                <p class="card-description">Learn about HTML, CSS, and basic web development principles.</p>
+                <div class="card-stats">
+                    <span class="stat">25 Questions</span>
+                    <span class="stat">•</span>
+                    <span class="stat">30 min</span>
+                </div>
+            </div>
+            <div class="card-icon">🌐</div>
+        </div>
+    </div>
+  </div>
+
+  
   
 
